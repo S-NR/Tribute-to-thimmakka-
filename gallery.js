@@ -6,7 +6,8 @@ const firebaseConfig = {
   apiKey: "AIzaSyB0FHjz-pllgQgmHC1Eykfj0tlmReAMLj8",
   authDomain: "tribute-to-thimmakka-1.firebaseapp.com",
   projectId: "tribute-to-thimmakka-1",
-  storageBucket: "tribute-to-thimmakka-1.firebasestorage.app",
+  // storageBucket: "tribute-to-thimmakka-1.firebasestorage.app",
+  storageBucket: "tribute-to-thimmakka-1.appspot.com",
   messagingSenderId: "49417317822",
   appId: "1:49417317822:web:b30d2694275f6cde8dddef",
   measurementId: "G-JJ7MLTWSQP"
