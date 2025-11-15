@@ -1,33 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tribute to Saalumarada Thimmakka</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tribute to Saalumarada Thimmakka — #JaiThimmakka</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <header>
+    <h1>🌿 Tribute to Saalumarada Thimmakka</h1>
+    <p class="tag">#JaiThimmakka — Grow a plant, take a selfie, share it</p>
+  </header>
 
-    <header>
-        <h1>🌿 Tribute to Saalumarada Thimmakka 🌿</h1>
-        <p>#JaiThimmakka – Grow a Plant, Take a Selfie & Upload</p>
-    </header>
-
+  <main class="container">
     <section class="upload-box">
-        <h2>Upload Your Selfie With Your Plant</h2>
+      <h2>Upload your selfie with your plant</h2>
 
-        <input type="text" id="name" placeholder="Your Name" required>
-        <input type="file" id="photoInput" accept="image/*" required>
+      <input id="name" type="text" placeholder="Your name (optional)">
+      <input id="photoInput" type="file" accept="image/*">
+      <div class="row">
+        <button id="uploadBtn">Upload to #JaiThimmakka</button>
+        <a class="gallery-link" href="gallery.html">See Community Gallery →</a>
+      </div>
 
-        <button onclick="uploadImage()">Upload</button>
+      <p id="status" class="status"></p>
 
-        <p id="status"></p>
-
-        <a href="gallery.html" class="gallery-link">📸 View Community Gallery</a>
+      <div id="preview" class="preview" style="display:none">
+        <strong>Preview:</strong>
+        <img id="previewImg" alt="preview" />
+      </div>
     </section>
+  </main>
 
-    <script type="module" src="upload.js"></script>
+  <footer>
+    <small>Tribute site • Images hosted on Cloudinary • Built with ❤️</small>
+  </footer>
+
+  <script type="module" src="upload.js"></script>
 </body>
 </html>
-
