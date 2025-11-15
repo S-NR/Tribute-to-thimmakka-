@@ -1,24 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community Gallery</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>#JaiThimmakka Community Gallery</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <header>
+    <h1>🌱 #JaiThimmakka Community Gallery</h1>
+    <p class="tag">Photos uploaded by the community</p>
+  </header>
 
-    <header>
-        <h1>🌱 Community Gallery 🌱</h1>
-        <p>People who joined the #JaiThimmakka movement</p>
-    </header>
-
+  <main>
     <div id="gallery" class="gallery"></div>
+    <div id="loading" class="status">Loading...</div>
+    <a class="back-link" href="index.html">⬅ Back to Upload</a>
+  </main>
 
-    <a href="index.html" class="back-link">⬅ Back to Upload</a>
-
-    <script type="module" src="gallery.js"></script>
+  <script type="module" src="gallery.js"></script>
 </body>
 </html>
-
