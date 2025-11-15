@@ -1,34 +1,45 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue }
-        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+// gallery.js
+const FIREBASE_DB_URL = null; // <-- replace with your DB URL string if you want persistent gallery
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB0FHjz-pllgQgmHC1Eykfj0tlmReAMLj8",
-  authDomain: "tribute-to-thimmakka-1.firebaseapp.com",
-  projectId: "tribute-to-thimmakka-1",
-  // storageBucket: "tribute-to-thimmakka-1.firebasestorage.app",
-  storageBucket: "tribute-to-thimmakka-1.appspot.com",
-  messagingSenderId: "49417317822",
-  appId: "1:49417317822:web:b30d2694275f6cde8dddef",
-  measurementId: "G-JJ7MLTWSQP"
-};
+const gallery = document.getElementById('gallery');
+const loading = document.getElementById('loading');
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+function escapeHtml(s){ return String(s || '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-const gallery = document.getElementById("gallery");
+async function loadGallery() {
+  if (!FIREBASE_DB_URL || !FIREBASE_DB_URL.startsWith('https://')) {
+    loading.textContent = "Gallery requires a small free Firebase Realtime DB to be persistent.\nPlease add your DB URL to gallery.js to enable the public gallery.";
+    return;
+  }
 
-const photosRef = ref(db, "photos/");
-onValue(photosRef, (snapshot) => {
-    gallery.innerHTML = "";
-
-    snapshot.forEach((child) => {
-        const data = child.val();
-
-        const img = document.createElement("img");
-        img.src = data.url;
-
-        gallery.appendChild(img);
+  loading.textContent = "Loading gallery...";
+  try {
+    const res = await fetch(`${FIREBASE_DB_URL}/photos.json`);
+    if (!res.ok) throw new Error('Failed to fetch gallery');
+    const data = await res.json();
+    gallery.innerHTML = '';
+    if (!data) {
+      loading.textContent = "No photos yet — be the first!";
+      return;
+    }
+    // convert to array + sort newest first
+    const arr = Object.keys(data).map(k => ({ id: k, ...data[k] })).sort((a,b)=> (b.timestamp||0) - (a.timestamp||0));
+    arr.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const name = escapeHtml(item.name || 'Anonymous');
+      const time = item.timestamp ? new Date(item.timestamp).toLocaleString() : '';
+      card.innerHTML = `
+        <img loading="lazy" src="${item.url}" alt="${name}" />
+        <div class="meta"><strong>${name}</strong><br><time>${time}</time></div>
+      `;
+      gallery.appendChild(card);
     });
-});
+    loading.textContent = '';
+  } catch (err) {
+    console.error(err);
+    loading.textContent = 'Could not load gallery';
+  }
+}
 
+loadGallery();
