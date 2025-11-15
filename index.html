@@ -1,1 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tribute to Saalumarada Thimmakka</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>🌿 Tribute to Saalumarada Thimmakka 🌿</h1>
+        <p>#JaiThimmakka – Grow a Plant, Take a Selfie & Upload</p>
+    </header>
+
+    <section class="upload-box">
+        <h2>Upload Your Selfie With Your Plant</h2>
+
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="file" id="photoInput" accept="image/*" required>
+
+        <button onclick="uploadImage()">Upload</button>
+
+        <p id="status"></p>
+
+        <a href="gallery.html" class="gallery-link">📸 View Community Gallery</a>
+    </section>
+
+    <script type="module" src="upload.js"></script>
+</body>
+</html>
 
