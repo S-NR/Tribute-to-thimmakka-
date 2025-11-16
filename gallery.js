@@ -1,34 +1,54 @@
-const FIREBASE_DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/";
+// Cloudinary upload URL
+const CLOUD_NAME = "dtmzraoiz";
+const PRESET = "tribute_preset";
 
-async function loadGallery() {
-    const gallery = document.getElementById("gallery");
-    gallery.innerHTML = "Loading images... 🌿";
+async function uploadImage() {
+    const name = document.getElementById("name").value;
+    const file = document.getElementById("photoInput").files[0];
+    const status = document.getElementById("status");
 
-    const res = await fetch(`${FIREBASE_DB_URL}/photos.json`);
-    const data = await res.json();
-
-    if (!data) {
-        gallery.innerHTML = "<p>No photos uploaded yet.</p>";
+    if (!name || !file) {
+        status.textContent = "Enter name & select a photo!";
         return;
     }
 
-    gallery.innerHTML = "";
+    status.textContent = "Uploading...";
 
-    // Convert object → array
-    const photos = Object.values(data).reverse(); // Newest first
+    let formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", PRESET);
 
-    photos.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "photo-card";
+    // Upload to Cloudinary
+    let response = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+        { method: "POST", body: formData }
+    );
 
-        card.innerHTML = `
-            <img src="${item.url}" alt="Uploaded Photo" />
-            <h3>${item.name}</h3>
-            <p>${new Date(item.timestamp).toLocaleString()}</p>
-        `;
+    let data = await response.json();
+    let imageURL = data.secure_url;
 
-        gallery.appendChild(card);
+    // Store URL in Firebase
+    firebase.database().ref("photos").push({
+        name: name,
+        url: imageURL,
+        time: Date.now()
     });
+
+    status.textContent = "Uploaded!";
 }
 
-loadGallery();
+// Load images into gallery
+firebase.database().ref("photos").on("value", snapshot => {
+    const gallery = document.getElementById("gallery");
+    gallery.innerHTML = "";
+
+    snapshot.forEach(child => {
+        let info = child.val();
+
+        let img = document.createElement("img");
+        img.src = info.url;
+        img.title = info.name;
+
+        gallery.appendChild(img);
+    });
+});
