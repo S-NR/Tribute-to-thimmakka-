@@ -1,8 +1,8 @@
 const CLOUD_NAME = "dtmzraoiz";
 const UPLOAD_PRESET = "tribute_preset";
 
-// Firebase DB reference
-const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/uploads.json";
+// Save photos under "photos" (not uploads)
+const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/photos.json";
 
 document.getElementById("uploadForm").addEventListener("submit", async function(e) {
     e.preventDefault();
@@ -29,7 +29,7 @@ document.getElementById("uploadForm").addEventListener("submit", async function(
     let data = await res.json();
 
     if (data.secure_url) {
-        // Save URL in Firebase
+        // Save URL in the SAME path gallery reads
         await fetch(DB_URL, {
             method: "POST",
             body: JSON.stringify({ url: data.secure_url }),
