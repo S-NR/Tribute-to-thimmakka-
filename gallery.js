@@ -1,4 +1,5 @@
-const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/uploads.json";
+// 🔥 Correct Firebase Photos URL
+const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/photos.json";
 
 async function loadGallery() {
     const galleryDiv = document.getElementById("gallery");
@@ -6,24 +7,40 @@ async function loadGallery() {
 
     loadingDiv.innerText = "Loading...";
 
-    let res = await fetch(DB_URL);
-    let data = await res.json();
+    try {
+        let res = await fetch(DB_URL);
+        let data = await res.json();
 
-    galleryDiv.innerHTML = "";
-    loadingDiv.style.display = "none";
+        galleryDiv.innerHTML = "";
+        loadingDiv.style.display = "none";
 
-    if (!data) {
-        loadingDiv.style.display = "block";
-        loadingDiv.innerText = "No images uploaded yet.";
-        return;
+        if (!data) {
+            loadingDiv.style.display = "block";
+            loadingDiv.innerText = "No images uploaded yet.";
+            return;
+        }
+
+        Object.values(data).forEach(item => {
+            let card = document.createElement("div");
+            card.className = "photo-card";
+
+            let img = document.createElement("img");
+            img.src = item.url;
+
+            let caption = document.createElement("p");
+            caption.innerText = item.name;
+
+            card.appendChild(img);
+            card.appendChild(caption);
+
+            galleryDiv.appendChild(card);
+        });
+
+    } catch (e) {
+        loadingDiv.innerText = "Error loading gallery.";
+        console.error(e);
     }
-
-    Object.values(data).forEach(item => {
-        let img = document.createElement("img");
-        img.src = item.url;
-        img.className = "gallery-img";
-        galleryDiv.appendChild(img);
-    });
 }
 
+// Run on page load
 loadGallery();
