@@ -1,5 +1,5 @@
 // 🔥 Correct Firebase Photos URL
-const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/photos.json";
+const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/uploads.json";
 
 async function loadGallery() {
     const galleryDiv = document.getElementById("gallery");
