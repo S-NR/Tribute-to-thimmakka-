@@ -19,6 +19,7 @@ document.getElementById("uploadForm").addEventListener("submit", async function(
     let formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", UPLOAD_PRESET);
+    formData.append("folder", "tribute_to_thimmakka");
 
     // Upload to Cloudinary
     let res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
