@@ -1,4 +1,4 @@
-// 🔥 Correct Firebase Photos URL
+// Correct Firebase uploads path
 const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/uploads.json";
 
 async function loadGallery() {
@@ -20,19 +20,16 @@ async function loadGallery() {
             return;
         }
 
+        // Loop through all uploaded items
         Object.values(data).forEach(item => {
             let card = document.createElement("div");
             card.className = "photo-card";
 
             let img = document.createElement("img");
-            img.src = item.url;
-
-            let caption = document.createElement("p");
-            caption.innerText = item.name;
+            img.src = item.url;    // <-- FIXED
+            img.className = "gallery-img";
 
             card.appendChild(img);
-            card.appendChild(caption);
-
             galleryDiv.appendChild(card);
         });
 
@@ -42,5 +39,5 @@ async function loadGallery() {
     }
 }
 
-// Run on page load
+// Load on page open
 loadGallery();
