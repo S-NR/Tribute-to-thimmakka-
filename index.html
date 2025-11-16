@@ -88,7 +88,7 @@
     style="padding:12px 25px; font-size:16px; background-color:#2e7d32; color:white; border:none; border-radius:6px; cursor:pointer; transition:0.3s;">
    Know more about Saalu Marada Thimmakka
   </button>
-  <div style="max-width:600px; margin:30px auto; background-color: rgba(0,0,0,0.6); padding:20px; border-radius:10px; color:#fff; text-align:left; font-family: Arial, sans-serif; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
+  <!-- <div style="max-width:600px; margin:30px auto; background-color: rgba(0,0,0,0.6); padding:20px; border-radius:10px; color:#fff; text-align:left; font-family: Arial, sans-serif; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
   <h2 style="text-align:center; color:#c8e6c9;">🌱 How to Participate 🌱</h2>
   <ol style="line-height:2; font-size:1.1em;">
     <li>🌳 <span style="color:#81c784;">Plant a tree or any plant.</span></li>
@@ -96,16 +96,42 @@
     <li>📤 <span style="color:#ffb74d;">Upload your selfie here.</span></li>
     <li>🎉 <span style="color:#f06292;">Show your tribute and celebrate Thimmakka’s legacy!</span></li>
   </ol>
-</div>
+</div> -->
 
-<h2>Upload Your Plant Selfie</h2>
+<!-- <h2>Upload Your Plant Selfie</h2>
 <form id="uploadForm">
   <input type="text" id="name" placeholder="Your Name"><br><br>
   <input type="file" id="fileInput"><br><br>
   <button type="submit">Upload</button>
-</form>
+</form> -->
 
-<p id="status"></p>
+  <div style="display:flex; flex-wrap:wrap; max-width:900px; margin:30px auto; gap:20px;">
+  
+  <!-- How to Participate Column -->
+  <div style="flex:1; min-width:280px; background-color: rgba(0,0,0,0.6); padding:20px; border-radius:10px; color:#fff; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
+    <h2 style="text-align:center; color:#c8e6c9;">🌱 How to Participate 🌱</h2>
+    <ol style="line-height:2; font-size:1.1em;">
+      <li>🌳 <span style="color:#81c784;">Plant a tree or any plant.</span></li>
+      <li>🤳 <span style="color:#4fc3f7;">Take a selfie with your plant.</span></li>
+      <li>📤 <span style="color:#ffb74d;">Upload your selfie here.</span></li>
+      <li>🎉 <span style="color:#f06292;">Show your tribute and celebrate Thimmakka’s legacy!</span></li>
+    </ol>
+  </div>
+
+  <!-- Upload Form Column -->
+  <div style="flex:1; min-width:280px; background-color: rgba(0,0,0,0.6); padding:20px; border-radius:10px; color:#fff; box-shadow:0 4px 10px rgba(0,0,0,0.3);">
+    <h2 style="text-align:center; color:#c8e6c9;">Upload Your Plant Selfie</h2>
+    <form id="uploadForm">
+      <input type="text" id="name" placeholder="Your Name" style="width:100%;"><br><br>
+      <input type="file" id="fileInput" style="width:100%;"><br><br>
+      <button type="submit" class="btn" style="width:100%;">Upload</button>
+    </form>
+    <p id="status"></p>
+  </div>
+
+</div>
+
+<!-- <p id="status"></p> -->
 
 <hr>
 
