@@ -1,59 +1,44 @@
-// Cloudinary details
 const CLOUD_NAME = "dtmzraoiz";
 const UPLOAD_PRESET = "tribute_preset";
 
-// Your Firebase Realtime Database URL
-const FIREBASE_DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/";
+// Firebase DB reference
+const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/uploads.json";
 
-// Upload function
-async function uploadImage() {
-    const name = document.getElementById("name").value;
-    const file = document.getElementById("photoInput").files[0];
-    const status = document.getElementById("status");
+document.getElementById("uploadForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
 
-    if (!name || !file) {
-        status.textContent = "Please enter your name and select a photo 🌿";
+    const fileInput = document.getElementById("fileInput");
+    if (fileInput.files.length === 0) {
+        alert("Please select an image.");
         return;
     }
 
-    status.textContent = "Uploading... Please wait 🌱";
+    document.getElementById("status").innerText = "Uploading...";
 
-    // Prepare form data for Cloudinary
+    let file = fileInput.files[0];
     let formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", UPLOAD_PRESET);
 
-    try {
-        // Upload to Cloudinary
-        const cloudinaryRes = await fetch(
-            `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-            {
-                method: "POST",
-                body: formData
-            }
-        );
+    // Upload to Cloudinary
+    let res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+        method: "POST",
+        body: formData
+    });
 
-        const cloudinaryData = await cloudinaryRes.json();
-        if (!cloudinaryData.secure_url) throw new Error("Upload failed");
+    let data = await res.json();
 
-        // Save URL + name to Firebase
-        const photoData = {
-            name: name,
-            url: cloudinaryData.secure_url,
-            timestamp: Date.now()
-        };
-
-        await fetch(`${FIREBASE_DB_URL}/photos.json`, {
+    if (data.secure_url) {
+        // Save URL in Firebase
+        await fetch(DB_URL, {
             method: "POST",
-            body: JSON.stringify(photoData)
+            body: JSON.stringify({ url: data.secure_url }),
+            headers: { "Content-Type": "application/json" }
         });
 
-        status.textContent = "Uploaded successfully! 🎉";
-        document.getElementById("photoInput").value = "";
-        document.getElementById("name").value = "";
-
-    } catch (error) {
-        console.error(error);
-        status.textContent = "❌ Upload failed. Try again.";
+        document.getElementById("status").innerText = "Uploaded Successfully!";
+        fileInput.value = "";
+    } else {
+        document.getElementById("status").innerText = "Upload failed!";
     }
-}
+});
