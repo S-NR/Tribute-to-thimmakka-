@@ -1,209 +1,177 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tribute to Saalumarada Thimmakka</title>
-  <style>
-    /* Body and background */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-      background-image: url('salumarda-timmakka-2025-11-14-12-29-04.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed;
-      color: #fff;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-    }
-
-    /* Dark overlay for readability */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.65);
-      z-index: -1;
-    }
-
-    /* Headings */
-    h1, h3 { text-align: center; margin: 20px 0; }
-    h1 { font-size: 2.5em; color: #e0f2f1; }
-    h3 { color: #c8e6c9; margin-bottom: 30px; }
-
-    /* Buttons */
-    .btn {
-      padding:12px 25px;
-      font-size:16px;
-      background-color:#2e7d32;
-      color:white;
-      border:none;
-      border-radius:6px;
-      cursor:pointer;
-      transition:0.3s;
-    }
-    .btn:hover { background-color:#1b5e20; }
-
-    /* Content sections */
-    .section {
-      background-color: rgba(0,0,0,0.5);
-      padding: 20px;
-      margin: 20px auto;
-      border-radius: 8px;
-      max-width: 800px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      text-align: left;
-    }
-    .source { font-size: 0.85em; color: #ddd; }
-
-    /* Two-column layout */
-    .participate-upload-container {
-      display: flex;
-      gap: 20px;
-      max-width: 900px;
-      margin: 30px auto;
-      flex-wrap: wrap;
-    }
-    .participate-column, .upload-column {
-      flex: 1;
-      min-width: 280px;
-      background-color: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 10px;
-      color: #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-    .participate-column h2, .upload-column h2 {
-      text-align: center;
-      color: #c8e6c9;
-      margin-bottom: 15px;
-    }
-    .participate-column ol {
-      line-height: 2;
-      font-size: 1.1em;
-    }
-    .participate-column li span { color: #81c784; }
-
-    .upload-column .btn { width: 100%; }
-
-    /* Gallery */
-    #gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
-}
-#gallery img {
-  width: 200px; 
-  height: 200px;
-  object-fit: cover;
-  margin: 10px;
-  border-radius: 10px;
-  border: 3px solid #4CAF50;
-  box-shadow: 0px 0px 10px #999;
-}
-
-    /* Responsive: Mobile stacking */
-    @media (max-width: 700px) {
-      .participate-upload-container { flex-direction: column; }
-     
-      #gallery img {
-    width: calc(50% - 30px); /* two images per row with margin */
-    height: auto; /* maintain aspect ratio */
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tribute to Saalumarada Thimmakka</title>
+<style>
+  body {
+    font-family: Arial;
+    margin: 0; padding: 0;
+    line-height: 1.6;
+    background-image: url('salumarda-timmakka-2025-11-14-12-29-04.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+  }
+  body::before {
+    content: "";
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    background-color: rgba(0,0,0,0.65);
+    z-index: -1;
+  }
+  h1, h3 { text-align: center; margin: 20px 0; }
+  h1 { font-size: 2.5em; color: #e0f2f1; }
+  h3 { color: #c8e6c9; margin-bottom: 30px; }
+  .btn { padding:12px 25px; font-size:16px; background-color:#2e7d32; color:white; border:none; border-radius:6px; cursor:pointer; transition:0.3s; }
+  .btn:hover { background-color:#1b5e20; }
+  .section { background-color: rgba(0,0,0,0.5); padding: 20px; margin: 20px auto; border-radius: 8px; max-width: 800px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); text-align: left; }
+  .source { font-size: 0.85em; color: #ddd; }
+  .participate-upload-container { display:flex; gap:20px; max-width:900px; margin:30px auto; flex-wrap:wrap; }
+  .participate-column, .upload-column {
+    flex: 1; min-width: 280px;
+    background-color: rgba(0,0,0,0.6); padding:20px; border-radius:10px; color:#fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  .participate-column h2, .upload-column h2 { text-align:center; color:#c8e6c9; margin-bottom:15px; }
+  .participate-column ol { line-height:2; font-size:1.1em; }
+  .participate-column li span { color: #81c784; }
+  .upload-column .btn { width: 100%; }
+  #gallery { display:flex; flex-wrap: wrap; justify-content: center; margin-top:20px; }
+  .image-card {
+    background-color: rgba(0,0,0,0.6);
+    margin:10px; padding:10px; border-radius:10px;
+    width:220px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-align:left;
+  }
+  .image-card img { width:100%; border-radius:5px; }
+  .image-card p { margin:5px 0; font-size:0.9em; }
+  .like-btn, .comment-btn { cursor:pointer; margin-right:5px; }
+  .comment-section { display:none; margin-top:5px; }
+  .comment-section input { width:100%; padding:4px; margin-bottom:5px; border-radius:4px; border:1px solid #ccc; }
+  @media (max-width:700px) { .participate-upload-container { flex-direction: column; } .image-card { width:45%; } }
+</style>
 </head>
 <body>
 
 <h1>🌱 Tribute to Saalumarada Thimmakka 🌱</h1>
-<h3>#JaiThimmakka</h3>  
-<h3>Honoring Saalumarada Thimmakka, the Mother of Trees, and celebrating her legacy with tree-loving selfies from our community.</h3>
-<button onclick="location.href='about.html'" class="btn" style="display:block; margin: 20px auto;">
-  Know more about Saalumarada Thimmakka
+<h3>#JaiThimmakka</h3>
+<h3>Honoring Saalumarada Thimmakka and celebrating her legacy with tree-loving selfies from our community.</h3>
+<button onclick="location.href='about.html'" class="btn" style="display:block; margin:20px auto;">
+Know more about Saalumarada Thimmakka
 </button>
-  
 
-<!-- Two-column section -->
 <div class="participate-upload-container">
 
-  <!-- How to Participate -->
   <div class="participate-column">
     <h2>🌱 How to Participate 🌱</h2>
     <ol>
       <li>🌳 <span>Plant a tree or any plant.</span></li>
       <li>🤳 <span>Take a selfie with your plant.</span></li>
       <li>📤 <span>Upload your selfie here.</span></li>
+      <li>👥 <span>Nominate 3 friends to join this event.</span></li>
       <li>🎉 <span>Show your tribute and celebrate Thimmakka’s legacy!</span></li>
     </ol>
   </div>
 
-  <!-- Upload Form -->
-<div class="upload-column">
-  <h2>Upload Your Plant Selfie</h2>
-<form id="uploadForm">
-  <input type="text" id="name" placeholder="Your Name" required style="width:100%;"><br><br>
-  <input type="file" id="fileInput" required style="width:100%;"><br><br>
-  <textarea id="description" placeholder="Add a short description about your plant" style="width:100%; padding:8px; border-radius:4px; border:1px solid #ccc;"></textarea><br><br>
-  <button type="submit" class="btn" style="width:100%;">Upload</button>
-</form>
-
-  <p id="status"></p>
-</div>
+  <div class="upload-column">
+    <h2>Upload Your Plant Selfie</h2>
+    <form id="uploadForm">
+      <input type="text" id="name" placeholder="Your Name" required style="width:100%;"><br><br>
+      <input type="file" id="fileInput" required style="width:100%;"><br><br>
+      <textarea id="description" placeholder="Add a short description about your plant" style="width:100%; padding:8px; border-radius:4px; border:1px solid #ccc;"></textarea><br><br>
+      <input type="text" id="nominees" placeholder="Nominate 3 members (comma-separated)" style="width:100%; padding:8px; border-radius:4px; border:1px solid #ccc;"><br><br>
+      <button type="submit" class="btn">Upload</button>
+    </form>
+    <p id="status"></p>
+  </div>
 
 </div>
 
 <hr>
 
-<!-- Community Gallery -->
 <h2 style="text-align:center; margin-top:40px;">Community Gallery</h2>
 <div id="gallery"></div>
 
-<!-- Firebase scripts -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    databaseURL: "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
-  firebase.initializeApp(firebaseConfig);
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  databaseURL: "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
 
-  const dbRef = firebase.database().ref('uploads');
-  const gallery = document.getElementById('gallery');
+const dbRef = firebase.database().ref('uploads');
+const gallery = document.getElementById('gallery');
 
-  dbRef.on('value', snapshot => {
-    const data = snapshot.val();
-    gallery.innerHTML = ''; // clear old images
+dbRef.on('value', snapshot => {
+  const data = snapshot.val();
+  gallery.innerHTML = '';
+  if (data) {
+    for (let key in data) {
+      const item = data[key];
+      const card = document.createElement('div');
+      card.className = 'image-card';
 
-    if (data) {
-      for (let key in data) {
-        if (data[key].url) {
-          const img = document.createElement('img');
-          img.src = data[key].url;
-          img.alt = key;
-          img.onerror = () => { img.style.display = 'none'; }
-          gallery.appendChild(img);
+      card.innerHTML = `
+        <img src="${item.url}" alt="${key}">
+        <p><strong>${item.name}</strong></p>
+        <p>${item.description || ''}</p>
+        <p><strong>Nominees:</strong> ${item.nominees || 'None'}</p>
+        <button class="like-btn" onclick="likeImage('${key}')">👍 <span id="likes-${key}">${item.likes || 0}</span></button>
+        <button class="comment-btn" onclick="toggleComment('comments-${key}')">💬 Comment</button>
+        <div id="comments-${key}" class="comment-section">
+          <input type="text" id="comment-input-${key}" placeholder="Write a comment...">
+          <button onclick="addComment('${key}')">Post</button>
+          <div id="comment-list-${key}"></div>
+        </div>
+      `;
+      gallery.appendChild(card);
+
+      // Load comments
+      const commentListDiv = document.getElementById(`comment-list-${key}`);
+      if(item.comments){
+        for(let c in item.comments){
+          const p = document.createElement('p');
+          p.textContent = item.comments[c];
+          commentListDiv.appendChild(p);
         }
       }
-    } else {
-      gallery.innerHTML = '<p style="color:white; text-align:center;">No images found!</p>';
     }
-  });
+  } else {
+    gallery.innerHTML = '<p style="color:white; text-align:center;">No images found!</p>';
+  }
+});
+
+// Likes and Comments functions
+function likeImage(key){
+  const likesRef = firebase.database().ref('uploads/' + key + '/likes');
+  likesRef.transaction(current => (current||0)+1);
+}
+function toggleComment(divId){
+  const div = document.getElementById(divId);
+  div.style.display = div.style.display==='none'?'block':'none';
+}
+function addComment(key){
+  const input = document.getElementById('comment-input-' + key);
+  const text = input.value.trim();
+  if(text){
+    firebase.database().ref('uploads/' + key + '/comments').push(text);
+    input.value='';
+  }
+}
 </script>
 
 <script src="upload.js"></script>
 <script src="gallery.js"></script>
 
 </body>
-  </html>
+</html>
