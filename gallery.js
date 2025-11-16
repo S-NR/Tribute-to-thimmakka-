@@ -1,54 +1,25 @@
-// Cloudinary upload URL
-const CLOUD_NAME = "dtmzraoiz";
-const PRESET = "tribute_preset";
+const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/uploads.json";
 
-async function uploadImage() {
-    const name = document.getElementById("name").value;
-    const file = document.getElementById("photoInput").files[0];
-    const status = document.getElementById("status");
+async function loadGallery() {
+    const container = document.getElementById("gallery");
+    container.innerHTML = "Loading...";
 
-    if (!name || !file) {
-        status.textContent = "Enter name & select a photo!";
+    let res = await fetch(DB_URL);
+    let data = await res.json();
+
+    container.innerHTML = "";
+
+    if (!data) {
+        container.innerHTML = "<p>No images uploaded yet.</p>";
         return;
     }
 
-    status.textContent = "Uploading...";
-
-    let formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", PRESET);
-
-    // Upload to Cloudinary
-    let response = await fetch(
-        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-        { method: "POST", body: formData }
-    );
-
-    let data = await response.json();
-    let imageURL = data.secure_url;
-
-    // Store URL in Firebase
-    firebase.database().ref("photos").push({
-        name: name,
-        url: imageURL,
-        time: Date.now()
+    Object.values(data).forEach(item => {
+        let img = document.createElement("img");
+        img.src = item.url;
+        img.className = "gallery-img";
+        container.appendChild(img);
     });
-
-    status.textContent = "Uploaded!";
 }
 
-// Load images into gallery
-firebase.database().ref("photos").on("value", snapshot => {
-    const gallery = document.getElementById("gallery");
-    gallery.innerHTML = "";
-
-    snapshot.forEach(child => {
-        let info = child.val();
-
-        let img = document.createElement("img");
-        img.src = info.url;
-        img.title = info.name;
-
-        gallery.appendChild(img);
-    });
-});
+loadGallery();
