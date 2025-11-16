@@ -26,9 +26,12 @@
 <h3>#JaiThimmakka</h3>
 
 <h2>Upload Your Plant Selfie</h2>
-<input type="text" id="name" placeholder="Your Name"><br><br>
-<input type="file" id="photoInput"><br><br>
-<button onclick="uploadImage()">Upload</button>
+<form id="uploadForm">
+  <input type="text" id="name" placeholder="Your Name"><br><br>
+  <input type="file" id="fileInput"><br><br>
+  <button type="submit">Upload</button>
+</form>
+
 <p id="status"></p>
 
 <hr>
