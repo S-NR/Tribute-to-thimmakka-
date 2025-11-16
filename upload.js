@@ -2,7 +2,7 @@ const CLOUD_NAME = "dtmzraoiz";
 const UPLOAD_PRESET = "tribute_preset";
 
 // Save photos under "photos" (not uploads)
-const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/photos.json";
+const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/uploads.json";
 
 document.getElementById("uploadForm").addEventListener("submit", async function(e) {
     e.preventDefault();
