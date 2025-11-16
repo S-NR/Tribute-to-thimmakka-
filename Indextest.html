@@ -1,1 +1,195 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tribute to Saalumarada Thimmakka</title>
+  <style>
+    /* Body and background */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-image: url('salumarda-timmakka-2025-11-14-12-29-04.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    }
+
+    /* Dark overlay for readability */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.65);
+      z-index: -1;
+    }
+
+    /* Headings */
+    h1, h3 { text-align: center; margin: 20px 0; }
+    h1 { font-size: 2.5em; color: #e0f2f1; }
+    h3 { color: #c8e6c9; margin-bottom: 30px; }
+
+    /* Buttons */
+    .btn {
+      padding:12px 25px;
+      font-size:16px;
+      background-color:#2e7d32;
+      color:white;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+    .btn:hover { background-color:#1b5e20; }
+
+    /* Content sections */
+    .section {
+      background-color: rgba(0,0,0,0.5);
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 8px;
+      max-width: 800px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      text-align: left;
+    }
+    .source { font-size: 0.85em; color: #ddd; }
+
+    /* Two-column layout */
+    .participate-upload-container {
+      display: flex;
+      gap: 20px;
+      max-width: 900px;
+      margin: 30px auto;
+      flex-wrap: wrap;
+    }
+    .participate-column, .upload-column {
+      flex: 1;
+      min-width: 280px;
+      background-color: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 10px;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .participate-column h2, .upload-column h2 {
+      text-align: center;
+      color: #c8e6c9;
+      margin-bottom: 15px;
+    }
+    .participate-column ol {
+      line-height: 2;
+      font-size: 1.1em;
+    }
+    .participate-column li span { color: #81c784; }
+
+    .upload-column .btn { width: 100%; }
+
+    /* Gallery */
+    #gallery { display:flex; flex-wrap:wrap; justify-content:center; margin-top:20px; }
+    #gallery img {
+      width: 200px; height: 200px;
+      object-fit: cover;
+      margin: 10px;
+      border-radius: 10px;
+      border: 3px solid #4CAF50;
+      box-shadow: 0px 0px 10px #999;
+    }
+
+    /* Responsive: Mobile stacking */
+    @media (max-width: 700px) {
+      .participate-upload-container { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>🌱 Tribute to Saalumarada Thimmakka 🌱</h1>
+<h3>#JaiThimmakka</h3>  
+<h3>Honoring Saalumarada Thimmakka, the Mother of Trees, and celebrating her legacy with tree-loving selfies from our community.</h3>
+<button onclick="location.href='about.html'" class="btn">
+  Know more about Saalumarada Thimmakka
+</button>
+
+<!-- Two-column section -->
+<div class="participate-upload-container">
+
+  <!-- How to Participate -->
+  <div class="participate-column">
+    <h2>🌱 How to Participate 🌱</h2>
+    <ol>
+      <li>🌳 <span>Plant a tree or any plant.</span></li>
+      <li>🤳 <span>Take a selfie with your plant.</span></li>
+      <li>📤 <span>Upload your selfie here.</span></li>
+      <li>🎉 <span>Show your tribute and celebrate Thimmakka’s legacy!</span></li>
+    </ol>
+  </div>
+
+  <!-- Upload Form -->
+  <div class="upload-column">
+    <h2>Upload Your Plant Selfie</h2>
+    <form id="uploadForm">
+      <input type="text" id="name" placeholder="Your Name"><br><br>
+      <input type="file" id="fileInput"><br><br>
+      <button type="submit" class="btn">Upload</button>
+    </form>
+    <p id="status"></p>
+  </div>
+
+</div>
+
+<hr>
+
+<!-- Community Gallery -->
+<h2 style="text-align:center; margin-top:40px;">Community Gallery</h2>
+<div id="gallery"></div>
+
+<!-- Firebase scripts -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    databaseURL: "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  const dbRef = firebase.database().ref('uploads');
+  const gallery = document.getElementById('gallery');
+
+  dbRef.on('value', snapshot => {
+    const data = snapshot.val();
+    gallery.innerHTML = ''; // clear old images
+
+    if (data) {
+      for (let key in data) {
+        if (data[key].url) {
+          const img = document.createElement('img');
+          img.src = data[key].url;
+          img.alt = key;
+          img.onerror = () => { img.style.display = 'none'; }
+          gallery.appendChild(img);
+        }
+      }
+    } else {
+      gallery.innerHTML = '<p style="color:white; text-align:center;">No images found!</p>';
+    }
+  });
+</script>
+
+<script src="upload.js"></script>
+<script src="gallery.js"></script>
+
+</body>
+</html>
