@@ -1,16 +1,20 @@
 const DB_URL = "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/uploads.json";
 
 async function loadGallery() {
-    const container = document.getElementById("gallery");
-    container.innerHTML = "Loading...";
+    const galleryDiv = document.getElementById("gallery");
+    const loadingDiv = document.getElementById("loading");
+
+    loadingDiv.innerText = "Loading...";
 
     let res = await fetch(DB_URL);
     let data = await res.json();
 
-    container.innerHTML = "";
+    galleryDiv.innerHTML = "";
+    loadingDiv.style.display = "none";
 
     if (!data) {
-        container.innerHTML = "<p>No images uploaded yet.</p>";
+        loadingDiv.style.display = "block";
+        loadingDiv.innerText = "No images uploaded yet.";
         return;
     }
 
@@ -18,7 +22,7 @@ async function loadGallery() {
         let img = document.createElement("img");
         img.src = item.url;
         img.className = "gallery-img";
-        container.appendChild(img);
+        galleryDiv.appendChild(img);
     });
 }
 
