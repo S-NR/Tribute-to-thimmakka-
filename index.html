@@ -112,43 +112,40 @@ firebase.initializeApp(firebaseConfig);
 const dbRef = firebase.database().ref('uploads');
 const gallery = document.getElementById('gallery');
 
-dbRef.on('value', snapshot => {
-  const data = snapshot.val();
-  gallery.innerHTML = '';
-  if (data) {
-    for (let key in data) {
-      const item = data[key];
-      const card = document.createElement('div');
-      card.className = 'image-card';
+// Render gallery and live updates
+dbRef.on('child_added', snapshot => {
+  const key = snapshot.key;
+  const item = snapshot.val();
 
-      card.innerHTML = `
-        <img src="${item.url}" alt="${key}">
-        <p><strong>${item.name}</strong></p>
-        <p>${item.description || ''}</p>
-        <p><strong>Nominees:</strong> ${item.nominees || 'None'}</p>
-        <button class="like-btn" onclick="likeImage('${key}')">👍 <span id="likes-${key}">${item.likes || 0}</span></button>
-        <button class="comment-btn" onclick="toggleComment('comments-${key}')">💬 Comment</button>
-        <div id="comments-${key}" class="comment-section">
-          <input type="text" id="comment-input-${key}" placeholder="Write a comment...">
-          <button onclick="addComment('${key}')">Post</button>
-          <div id="comment-list-${key}"></div>
-        </div>
-      `;
-      gallery.appendChild(card);
+  const card = document.createElement('div');
+  card.className = 'image-card';
+  card.innerHTML = `
+    <img src="${item.url}" alt="${key}">
+    <p><strong>${item.name}</strong></p>
+    <p>${item.description || ''}</p>
+    <p><strong>Nominees:</strong> ${item.nominees || 'None'}</p>
+    <button class="like-btn" onclick="likeImage('${key}')">👍 <span id="likes-${key}">${item.likes || 0}</span></button>
+    <button class="comment-btn" onclick="toggleComment('comments-${key}')">💬 Comment</button>
+    <div id="comments-${key}" class="comment-section">
+      <input type="text" id="comment-input-${key}" placeholder="Write a comment...">
+      <button onclick="addComment('${key}')">Post</button>
+      <div id="comment-list-${key}"></div>
+    </div>
+  `;
+  gallery.prepend(card);
 
-      // Load comments
-      const commentListDiv = document.getElementById(`comment-list-${key}`);
-      if(item.comments){
-        for(let c in item.comments){
-          const p = document.createElement('p');
-          p.textContent = item.comments[c];
-          commentListDiv.appendChild(p);
-        }
-      }
-    }
-  } else {
-    gallery.innerHTML = '<p style="color:white; text-align:center;">No images found!</p>';
-  }
+  // Live likes listener
+  firebase.database().ref('uploads/' + key + '/likes').on('value', snap => {
+    document.getElementById(`likes-${key}`).innerText = snap.val() || 0;
+  });
+
+  // Live comments listener
+  const commentListDiv = document.getElementById(`comment-list-${key}`);
+  firebase.database().ref('uploads/' + key + '/comments').on('child_added', snap => {
+    const p = document.createElement('p');
+    p.textContent = snap.val();
+    commentListDiv.appendChild(p);
+  });
 });
 
 // Likes and Comments functions
@@ -171,7 +168,6 @@ function addComment(key){
 </script>
 
 <script src="upload.js"></script>
-<script src="gallery.js"></script>
 
 </body>
 </html>
