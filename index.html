@@ -41,8 +41,8 @@
 <!-- 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script> -->
-<img src="https://res.cloudinary.com/dtmzraoiz/image/upload/v1763273996/tribute_to_thimmakka/jxuga6njbowocv23w76z.jpg" alt="Test" width="300"/>
-  
+<!-- <img src="https://res.cloudinary.com/dtmzraoiz/image/upload/v1763273996/tribute_to_thimmakka/jxuga6njbowocv23w76z.jpg" alt="Test" width="300"/> -->
+  <!-- 
 
 <script>
   // Firebase config
@@ -55,7 +55,55 @@
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
+</script> -->
+
+<div id="gallery" style="display:flex; flex-wrap:wrap;"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    databaseURL: "https://tribute-to-thimmakka-1-default-rtdb.firebaseio.com/",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  const dbRef = firebase.database().ref('uploads');
+  const gallery = document.getElementById('gallery');
+
+  dbRef.on('value', snapshot => {
+    const data = snapshot.val();
+    gallery.innerHTML = ''; // clear old images
+
+    if (data) {
+      for (let key in data) {
+        if (data[key].url) {
+          const img = document.createElement('img');
+          img.src = data[key].url;
+          img.alt = key;
+          img.style.width = '200px';
+          img.style.margin = '5px';
+          img.style.border = '1px solid #ccc';
+          img.style.borderRadius = '5px';
+
+          // hide if browser can't render (like .avif in some cases)
+          img.onerror = () => { img.style.display = 'none'; }
+
+          gallery.appendChild(img);
+        }
+      }
+    } else {
+      gallery.innerHTML = '<p>No images found!</p>';
+    }
+  });
 </script>
+
+  
 
 <script src="upload.js"></script>
 <script src="gallery.js"></script>
